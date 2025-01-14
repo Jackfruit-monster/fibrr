@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -323,5 +324,33 @@ func HandleVerification(c *fiber.Ctx) error {
 func HandleSubmitOrder(c *fiber.Ctx) error {
 	resp := utils.NewResponse(c)
 
-	return resp.Success()
+	// 创建HTTPClient实例
+	client := utils.NewHTTPClient("https://api.deepseek.com")
+
+	// 设置API Key
+	client.SetHeader("Authorization", "Bearer <DeepSeek API Key>")
+
+	// 创建请求体（使用map[string]interface{}）
+	request := map[string]interface{}{
+		"model": "deepseek-chat",
+		"messages": []map[string]string{
+			{"role": "system", "content": "You are a helpful assistant."},
+			{"role": "user", "content": "Hello!"},
+		},
+		"stream": false,
+	}
+
+	// 调用API（响应体使用map[string]interface{}）
+	var response map[string]interface{}
+	err := client.Post("/chat/completions", request, &response)
+	if err != nil {
+		log.Printf("Error calling DeepSeek API: %v", err)
+		return resp.Fail(fiber.StatusInternalServerError, "Failed to call API")
+	}
+
+	// 打印响应
+	fmt.Printf("Response: %+v\n", response)
+
+	// 返回成功响应
+	return resp.SuccessWithData(response)
 }

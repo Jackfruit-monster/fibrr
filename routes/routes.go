@@ -7,7 +7,7 @@ import (
 )
 
 func InitRoutes(app *fiber.App) {
-	fz_pay := app.Group("/api/pay")
+	fz_pay := app.Group("/api")
 	// 获取商品
 	fz_pay.Get("/goods", handlers.HandleGoods)
 	// 飞猪回调
@@ -20,8 +20,9 @@ func InitRoutes(app *fiber.App) {
 	fz_pay.Post("/verification", handlers.HandleVerification)
 	// 提交订单
 	fz_pay.Post("/submit-order", handlers.HandleSubmitOrder)
+
 	// 系统接口-接口文档
-	fz_pay.Get("/api", handlers.HandleApiDoc)
+	fz_pay.Get("/doc", handlers.HandleApiDoc)
 	// 系统接口-指标接口
 	fz_pay.Get("/metrics", monitor.New(monitor.Config{Title: "Service Metrics Page"}))
 	// 系统接口-健康检查

@@ -36,7 +36,7 @@ func main() {
 		AllowOrigins:     conf.AppConfig.Cors.AllowOrigins, // 允许的前端域名
 		AllowMethods:     conf.AppConfig.Cors.AllowMethods, // 允许的方法
 		AllowHeaders:     conf.AppConfig.Cors.AllowHeaders, // 允许的请求头
-		AllowCredentials: true,                             // 是否允许发送 Cookie 或凭证
+		AllowCredentials: false,                            // 是否允许发送 Cookie 或凭证
 	}))
 
 	// 使用请求日志中间件
