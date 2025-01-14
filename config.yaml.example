@@ -1,0 +1,35 @@
+port: 3133
+port_backup: 3134
+
+bot_key: "企业微信机器人的KEY"
+
+app:
+  name: "api-pay"
+  prefork: false
+  body_limit: 100
+
+cors:
+  allowed_methods: "GET,POST"
+  allowed_headers: "Content-Type, Authorization"
+  allowed_origins: "*"
+
+database:
+  host: 127.0.0.1
+  user: root
+  password: 123456
+  dbname: pay
+  port: 3306
+
+redis:
+  addr: "127.0.0.1:6379"  # Redis 地址
+  password: ""            # Redis 密码
+  db: 0                   # Redis 数据库
+
+logging:
+  exclude_paths: [ "/api/manage/upload-callback" ] ## 针对*的路径，指定的路径需要记录日志
+  skip_paths: [ "/api/manage/*", "/favicon.ico", "/api/pay/api", "/api/pay/health", "/api/pay/metrics", "/api/auth/markdown" ] ## 指定路径不记录日志
+
+ip_whitelist:
+  allowed_ips: [ "127.0.0.1", "114.242.25.126" ] ## 指定IP可以访问
+  include_paths: [ "/api/manage/upload-callback", "/api/manage/icon" ] ## 除去指定IP访问的地址外，其他地址也可以访问的接口
+  exclude_paths: [ "/api/manage/*", "/api/pay/api", "/api/pay/metrics", "/api/auth/credentials" ] ## 指定IP可以访问的路径
